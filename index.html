@@ -1,0 +1,874 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Swetha J P | AI & Web Developer</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Space+Grotesk:wght@500;600;700&display=swap');
+
+        * { scroll-behavior: smooth; }
+        body { font-family: 'Inter', system-ui, sans-serif; }
+        .font-display { font-family: 'Space Grotesk', sans-serif; }
+
+        /* ── Animated mesh background ── */
+        body {
+            background-color: #080E1A;
+            background-image:
+                radial-gradient(ellipse 80% 50% at 20% -10%, rgba(16,185,129,0.13) 0%, transparent 60%),
+                radial-gradient(ellipse 60% 40% at 80% 110%, rgba(56,189,248,0.08) 0%, transparent 60%);
+        }
+
+        /* ── Hero ── */
+        .hero-bg {
+            background:
+                radial-gradient(ellipse 70% 60% at 50% 0%, rgba(16,185,129,0.18) 0%, transparent 65%),
+                radial-gradient(ellipse 50% 40% at 90% 80%, rgba(56,189,248,0.10) 0%, transparent 60%),
+                linear-gradient(180deg, #080E1A 0%, #0B1220 100%);
+        }
+
+        /* ── Noise texture overlay ── */
+        .hero-bg::before {
+            content: '';
+            position: absolute; inset: 0;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
+            pointer-events: none;
+        }
+
+        /* ── Navbar ── */
+        nav {
+            background: rgba(8,14,26,0.85) !important;
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(16,185,129,0.12) !important;
+        }
+        .nav-link {
+            position: relative;
+            padding-bottom: 2px;
+        }
+        .nav-link::after {
+            content: '';
+            position: absolute; bottom: -2px; left: 0;
+            width: 0; height: 2px;
+            background: linear-gradient(90deg, #10B981, #38BDF8);
+            border-radius: 2px;
+            transition: width 0.3s ease;
+        }
+        .nav-link:hover::after { width: 100%; }
+
+        /* ── Section backgrounds ── */
+        .section-dark  { background: #080E1A; }
+        .section-deeper { background: #060B15; }
+
+        /* ── Section header ── */
+        .section-header {
+            font-size: 2.75rem;
+            line-height: 1.05;
+            font-weight: 700;
+            letter-spacing: -0.04em;
+        }
+        .section-header span.hl {
+            background: linear-gradient(135deg, #10B981 0%, #38BDF8 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        /* ── Cards ── */
+        .card-hover {
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+        }
+        .card-hover::before {
+            content: '';
+            position: absolute; inset: 0;
+            background: linear-gradient(135deg, rgba(16,185,129,0.06) 0%, rgba(56,189,248,0.03) 100%);
+            opacity: 0;
+            transition: opacity 0.4s ease;
+            pointer-events: none;
+            border-radius: inherit;
+        }
+        .card-hover:hover::before { opacity: 1; }
+        .card-hover:hover {
+            transform: translateY(-10px) scale(1.015);
+            box-shadow: 0 25px 50px -12px rgba(16,185,129,0.35), 0 0 0 1px rgba(16,185,129,0.3);
+            border-color: rgba(16,185,129,0.5) !important;
+        }
+        .platform-icon { transition: all 0.4s ease; }
+        .card-hover:hover .platform-icon { transform: scale(1.15) rotate(6deg); }
+
+        /* ── Shimmer line on card top ── */
+        .card-shimmer {
+            position: relative;
+        }
+        .card-shimmer::after {
+            content: '';
+            position: absolute; top: 0; left: 0; right: 0;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, #10B981, #38BDF8, transparent);
+            opacity: 0;
+            transition: opacity 0.4s ease;
+            border-radius: 9999px 9999px 0 0;
+        }
+        .card-shimmer:hover::after { opacity: 1; }
+
+        /* ── Gradient text ── */
+        .gradient-text {
+            background: linear-gradient(135deg, #10B981 0%, #38BDF8 60%, #818CF8 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        /* ── Glow text ── */
+        .glow-text {
+            text-shadow: 0 0 40px rgba(16,185,129,0.4);
+        }
+
+        /* ── Tech badges ── */
+        .tech-badge {
+            background: rgba(16,185,129,0.07);
+            color: #A7F3D0;
+            padding: 0.35rem 1rem;
+            border-radius: 9999px;
+            font-size: 0.82rem;
+            border: 1px solid rgba(16,185,129,0.25);
+            transition: all 0.25s ease;
+            cursor: default;
+            display: inline-flex;
+            align-items: center;
+        }
+        .tech-badge:hover {
+            background: linear-gradient(135deg, #10B981, #0EA5E9);
+            color: white;
+            border-color: transparent;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(16,185,129,0.4);
+        }
+
+        /* ── Project tag ── */
+        .proj-tag {
+            background: rgba(16,185,129,0.10);
+            color: #6EE7B7;
+            font-size: 0.72rem;
+            padding: 0.2rem 0.75rem;
+            border-radius: 9999px;
+            border: 1px solid rgba(16,185,129,0.25);
+            font-weight: 500;
+        }
+
+        /* ── Stat card ── */
+        .stat-card {
+            background: linear-gradient(135deg, rgba(16,185,129,0.08), rgba(56,189,248,0.04));
+            border: 1px solid rgba(16,185,129,0.2);
+        }
+
+        /* ── Progress bar animated ── */
+        @keyframes grow-bar {
+            from { width: 0; }
+            to   { width: 78.4%; }
+        }
+        .cgpa-bar {
+            animation: grow-bar 1.4s ease-out forwards;
+            background: linear-gradient(90deg, #10B981, #38BDF8);
+        }
+
+        /* ── Cert icon ── */
+        .cert-icon {
+            width: 44px; height: 44px;
+            background: linear-gradient(135deg, rgba(16,185,129,0.15), rgba(56,189,248,0.08));
+            border: 1px solid rgba(16,185,129,0.25);
+            border-radius: 12px;
+            display: flex; align-items: center; justify-content: center;
+            flex-shrink: 0;
+            transition: all 0.3s ease;
+        }
+        .card-hover:hover .cert-icon {
+            background: linear-gradient(135deg, rgba(16,185,129,0.3), rgba(56,189,248,0.15));
+            border-color: rgba(16,185,129,0.5);
+            transform: scale(1.1);
+        }
+
+        /* ── Status pill ── */
+        .status-pill {
+            background: rgba(16,185,129,0.1);
+            border: 1px solid rgba(16,185,129,0.3);
+            backdrop-filter: blur(10px);
+        }
+        @keyframes ping-dot {
+            0%, 100% { box-shadow: 0 0 0 0 rgba(16,185,129,0.6); }
+            50%       { box-shadow: 0 0 0 6px rgba(16,185,129,0); }
+        }
+        .pulse-dot {
+            animation: ping-dot 1.8s ease-in-out infinite;
+            background: #10B981;
+        }
+
+        /* ── CTA buttons ── */
+        .btn-primary {
+            background: linear-gradient(135deg, #10B981, #0EA5E9);
+            box-shadow: 0 8px 24px rgba(16,185,129,0.35);
+            transition: all 0.3s ease;
+        }
+        .btn-primary:hover {
+            box-shadow: 0 12px 32px rgba(16,185,129,0.55);
+            transform: translateY(-2px) scale(1.03);
+        }
+
+        /* ── Divider glow ── */
+        .section-divider {
+            height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(16,185,129,0.3), rgba(56,189,248,0.2), transparent);
+            border: none;
+            margin: 0;
+        }
+
+        /* ── Floating particles ── */
+        @keyframes float-up {
+            0%   { opacity: 0; transform: translateY(0) scale(0.4); }
+            40%  { opacity: 0.7; }
+            100% { opacity: 0; transform: translateY(-160px) scale(1.2); }
+        }
+        .particle {
+            position: absolute;
+            border-radius: 50%;
+            animation: float-up 5s ease-in infinite;
+        }
+        .particle:nth-child(odd)  { width: 5px; height: 5px; background: #10B981; }
+        .particle:nth-child(even) { width: 4px; height: 4px; background: #38BDF8; }
+
+        /* ── Grid lines hero decoration ── */
+        .hero-grid {
+            background-image:
+                linear-gradient(rgba(16,185,129,0.04) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(16,185,129,0.04) 1px, transparent 1px);
+            background-size: 60px 60px;
+            position: absolute; inset: 0;
+            pointer-events: none;
+            mask-image: radial-gradient(ellipse 70% 70% at 50% 50%, black 30%, transparent 100%);
+        }
+
+        /* ── Scrollbar ── */
+        ::-webkit-scrollbar { width: 5px; }
+        ::-webkit-scrollbar-track { background: #080E1A; }
+        ::-webkit-scrollbar-thumb {
+            background: linear-gradient(180deg, #10B981, #0EA5E9);
+            border-radius: 3px;
+        }
+
+        /* ── Mobile nav ── */
+        #mobile-menu { display: none; }
+        #mobile-menu.open { display: flex; }
+
+        /* ── Internship card accent ── */
+        .internship-card {
+            background: linear-gradient(135deg, rgba(16,185,129,0.06) 0%, rgba(14,165,233,0.04) 100%);
+            border: 1px solid rgba(16,185,129,0.2);
+        }
+
+        /* ── Coding platform card ── */
+        .platform-card-glow:hover {
+            box-shadow: 0 20px 40px -10px rgba(16,185,129,0.3), 0 0 0 1px rgba(16,185,129,0.3);
+        }
+
+        /* ── Skill category header ── */
+        .skill-cat-icon {
+            transition: all 0.3s ease;
+        }
+        .card-hover:hover .skill-cat-icon {
+            transform: scale(1.1) rotate(-5deg);
+        }
+
+        /* ── Timeline ── */
+        .timeline-dot {
+            width: 14px; height: 14px;
+            background: linear-gradient(135deg, #10B981, #38BDF8);
+            border-radius: 50%;
+            box-shadow: 0 0 0 3px rgba(16,185,129,0.25), 0 0 12px rgba(16,185,129,0.4);
+            flex-shrink: 0;
+        }
+    </style>
+</head>
+<body class="text-slate-200 antialiased">
+
+<!-- ════════════════════ NAVBAR ════════════════════ -->
+<nav class="fixed top-0 left-0 right-0 z-50 bg-[#0F172A]/95 backdrop-blur-lg border-b border-slate-700/60">
+    <div class="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
+        <!-- Logo -->
+        <div class="flex items-center gap-3">
+            <div>
+                <div class="font-display font-semibold text-xl tracking-tight">Swetha J P</div>
+                <div class="text-xs text-emerald-400 -mt-0.5">AI &amp; Web Developer</div>
+            </div>
+        </div>
+
+        <!-- Desktop nav -->
+        <div class="hidden md:flex gap-8 text-sm font-medium">
+                <a href="#about"        class="nav-link hover:text-emerald-400 transition">About</a>
+                <a href="#internship"   class="nav-link hover:text-emerald-400 transition">Internship</a>
+                <a href="#projects"     class="nav-link hover:text-emerald-400 transition">Projects</a>
+                <a href="#coding"       class="nav-link hover:text-emerald-400 transition">Coding</a>
+                <a href="#skills"       class="nav-link hover:text-emerald-400 transition">Skills</a>
+                <a href="#certificates" class="nav-link hover:text-emerald-400 transition">Certificates</a>
+            </div>
+
+        <!-- Social + Hamburger -->
+        <div class="flex items-center gap-3">
+            <a href="https://github.com/Swetha-JP" target="_blank" class="px-4 py-2 bg-white text-[#0F172A] rounded-3xl font-semibold hover:bg-slate-100 transition text-sm hidden sm:flex items-center gap-2">
+                <i class="fab fa-github"></i> GitHub
+            </a>
+            <a href="https://www.linkedin.com/in/swetha-jp" target="_blank" class="px-4 py-2 border border-slate-500 rounded-3xl font-medium hover:bg-slate-800 transition text-sm hidden sm:flex items-center gap-2">
+                <i class="fab fa-linkedin"></i>
+            </a>
+            <!-- hamburger -->
+            <button id="hamburger" class="md:hidden text-slate-300 hover:text-emerald-400 text-xl ml-2" onclick="document.getElementById('mobile-menu').classList.toggle('open')">
+                <i class="fas fa-bars"></i>
+            </button>
+        </div>
+    </div>
+
+    <!-- Mobile Menu -->
+    <div id="mobile-menu" class="flex-col px-6 pb-4 gap-3 md:hidden text-sm font-medium border-t border-slate-700/60">
+        <a href="#about"        onclick="document.getElementById('mobile-menu').classList.remove('open')" class="py-2 hover:text-emerald-400 transition">About</a>
+        <a href="#internship"   onclick="document.getElementById('mobile-menu').classList.remove('open')" class="py-2 hover:text-emerald-400 transition">Internship</a>
+        <a href="#projects"     onclick="document.getElementById('mobile-menu').classList.remove('open')" class="py-2 hover:text-emerald-400 transition">Projects</a>
+        <a href="#coding"       onclick="document.getElementById('mobile-menu').classList.remove('open')" class="py-2 hover:text-emerald-400 transition">Coding</a>
+        <a href="#skills"       onclick="document.getElementById('mobile-menu').classList.remove('open')" class="py-2 hover:text-emerald-400 transition">Skills</a>
+        <a href="#certificates" onclick="document.getElementById('mobile-menu').classList.remove('open')" class="py-2 hover:text-emerald-400 transition">Certificates</a>
+    </div>
+</nav>
+
+<!-- ════════════════════ HERO ════════════════════ -->
+<header class="hero-bg min-h-screen flex items-center pt-20 relative overflow-hidden">
+    <!-- Floating particles -->
+    <div class="hero-grid"></div>
+    <div class="particle" style="left:10%; bottom:0; animation-delay:0s;"></div>
+    <div class="particle" style="left:25%; bottom:0; animation-delay:1.2s;"></div>
+    <div class="particle" style="left:50%; bottom:0; animation-delay:0.6s;"></div>
+    <div class="particle" style="left:70%; bottom:0; animation-delay:1.8s;"></div>
+    <div class="particle" style="left:88%; bottom:0; animation-delay:0.3s;"></div>
+    <div class="particle" style="left:38%; bottom:0; animation-delay:2.4s;"></div>
+    <div class="particle" style="left:62%; bottom:0; animation-delay:1.5s;"></div>
+
+    <div class="max-w-5xl mx-auto px-6 text-center relative z-10" data-aos="fade-up">
+        <!-- Status pill -->
+        <div class="inline-flex items-center gap-2 px-5 py-2 status-pill rounded-full mb-8">
+            <div class="w-2.5 h-2.5 rounded-full pulse-dot"></div>
+            <span class="text-sm font-medium text-emerald-300">Open to Internships &amp; Opportunities · 2026</span>
+        </div>
+
+        <h1 class="text-5xl md:text-7xl font-display font-bold tracking-tighter mb-3 glow-text">Swetha J P</h1>
+        <p class="text-2xl md:text-3xl gradient-text font-semibold mb-4">AI &amp; Web Developer</p>
+        <p class="text-slate-400 mb-10 text-sm tracking-wide">Sri Eshwar College of Engineering &nbsp;·&nbsp; Pollachi, Tamil Nadu &nbsp;·&nbsp; B.Tech AI &amp; Data Science</p>
+
+        <p class="max-w-2xl mx-auto text-lg text-slate-300 mb-12 leading-relaxed">
+            Crafting intelligent, scalable web applications — from real-time emergency systems
+            to AI-powered coding platforms — with a passion for clean architecture and meaningful user experiences.
+        </p>
+
+        <!-- CTAs -->
+        <div class="flex flex-wrap justify-center gap-4">
+            <a href="tel:9900290558" class="btn-primary px-7 py-3.5 text-white rounded-3xl font-semibold flex items-center gap-2">
+                <i class="fas fa-phone text-sm"></i> 99002 90558
+            </a>
+            <a href="mailto:swetha.jp2024aids@sece.ac.in" class="px-7 py-3.5 bg-white/10 border border-white/20 backdrop-blur text-white rounded-3xl font-semibold flex items-center gap-2 hover:bg-white/20 transition hover:scale-105">
+                <i class="fas fa-envelope text-sm"></i> Email Me
+            </a>
+            <a href="https://drive.google.com/file/d/1IxmtMdIlWUO42pYFn_WcrYm59xD47vOG/view?usp=sharing" target="_blank"
+               class="px-7 py-3.5 border border-slate-500/50 rounded-3xl font-semibold hover:border-emerald-400/50 hover:bg-emerald-400/5 transition flex items-center gap-2">
+                <i class="fas fa-file-alt text-sm"></i> Resume
+            </a>
+        </div>
+
+        <!-- Scroll hint -->
+        <div class="mt-16 text-slate-600 animate-bounce text-xs flex flex-col items-center gap-1">
+            <span>scroll</span>
+            <i class="fas fa-chevron-down"></i>
+        </div>
+    </div>
+</header>
+
+<!-- ════════════════════ ABOUT ════════════════════ -->
+<section id="about" class="py-28 section-dark">
+    <div class="max-w-5xl mx-auto px-6">
+        <h2 class="section-header text-center mb-16" data-aos="fade-up">About Me</h2>
+        <div class="grid md:grid-cols-12 gap-12 items-start">
+            <!-- Text -->
+            <div class="md:col-span-7 space-y-5" data-aos="fade-right">
+                <p class="text-lg text-slate-300 leading-relaxed">
+                    I'm a B.Tech student in <span class="text-emerald-400 font-medium">Artificial Intelligence &amp; Data Science</span> at Sri Eshwar College of Engineering, Pollachi.
+                    I love turning complex, real-world problems into clean, user-friendly software — whether that's a live emergency dispatch system or an AI-assisted coding platform.
+                </p>
+                <p class="text-lg text-slate-300 leading-relaxed">
+                    My work spans the full stack: from React frontends and Node/FastAPI backends to MongoDB databases and Docker deployments.
+                    I place a strong emphasis on scalable architecture, readable code, and experiences that actually make a difference for the people using them.
+                </p>
+                <p class="text-lg text-slate-300 leading-relaxed">
+                    Outside of building projects, I actively sharpen my problem-solving skills — having solved <span class="text-emerald-400 font-medium">700+ problems</span> across LeetCode and SkillRack.
+                </p>
+            </div>
+
+            <!-- Stats -->
+            <div class="md:col-span-5 space-y-4" data-aos="fade-left">
+                <div class="stat-card rounded-3xl p-6 space-y-5">
+                    <h3 class="font-semibold text-emerald-400 text-sm uppercase tracking-widest">Quick Stats</h3>
+                    <div class="space-y-3">
+                        <div class="flex justify-between items-center">
+                            <span class="text-slate-400 flex items-center gap-2"><i class="fas fa-graduation-cap text-emerald-400 w-4"></i> Current CGPA</span>
+                            <span class="font-semibold text-white">7.84</span>
+                        </div>
+                        <div class="w-full bg-slate-800 rounded-full h-1.5">
+                            <div class="bg-emerald-400 h-1.5 rounded-full" style="width:78.4%"></div>
+                        </div>
+
+                        <div class="flex justify-between items-center mt-2">
+                            <span class="text-slate-400 flex items-center gap-2"><i class="fas fa-folder-open text-emerald-400 w-4"></i> Projects Built</span>
+                            <span class="font-semibold text-white">4+</span>
+                        </div>
+                        <div class="flex justify-between items-center">
+                            <span class="text-slate-400 flex items-center gap-2"><i class="fas fa-code text-emerald-400 w-4"></i> Problems Solved</span>
+                            <span class="font-semibold text-white">700+</span>
+                        </div>
+                        <div class="flex justify-between items-center">
+                            <span class="text-slate-400 flex items-center gap-2"><i class="fas fa-certificate text-emerald-400 w-4"></i> Certificates</span>
+                            <span class="font-semibold text-white">11+</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Contact quick links -->
+                <div class="bg-slate-900 border border-slate-700 rounded-3xl p-6 space-y-3">
+                    <h3 class="font-semibold text-emerald-400 text-sm uppercase tracking-widest">Reach Me</h3>
+                    <a href="mailto:swetha.jp2024aids@sece.ac.in" class="flex items-center gap-3 text-slate-300 hover:text-emerald-400 transition text-sm">
+                        <i class="fas fa-envelope w-4 text-emerald-400"></i> swetha.jp2024aids@sece.ac.in
+                    </a>
+                    <a href="tel:9900290558" class="flex items-center gap-3 text-slate-300 hover:text-emerald-400 transition text-sm">
+                        <i class="fas fa-phone w-4 text-emerald-400"></i> 99002 90558
+                    </a>
+                    <a href="https://www.linkedin.com/in/swetha-jp" target="_blank" class="flex items-center gap-3 text-slate-300 hover:text-emerald-400 transition text-sm">
+                        <i class="fab fa-linkedin w-4 text-emerald-400"></i> linkedin.com/in/swetha-jp
+                    </a>
+                    <a href="https://github.com/Swetha-JP" target="_blank" class="flex items-center gap-3 text-slate-300 hover:text-emerald-400 transition text-sm">
+                        <i class="fab fa-github w-4 text-emerald-400"></i> github.com/Swetha-JP
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ════════════════════ INTERNSHIP ════════════════════ -->
+<section id="internship" class="py-28 section-deeper">
+    <div class="max-w-4xl mx-auto px-6">
+        <h2 class="section-header text-center mb-16" data-aos="fade-up">Internship</h2>
+
+        <div class="bg-slate-900 border border-slate-700 rounded-3xl p-8 card-hover" data-aos="fade-up">
+            <div class="flex flex-col md:flex-row md:items-start justify-between gap-6">
+                <!-- Left: details -->
+                <div class="flex gap-5 items-start">
+                    <div class="w-14 h-14 bg-gradient-to-br from-blue-500/20 to-cyan-500/20 border border-blue-500/30 rounded-2xl flex items-center justify-center text-2xl flex-shrink-0">💼</div>
+                    <div>
+                        <h3 class="text-xl font-semibold mb-1">MERN Stack Intern</h3>
+                        <p class="text-emerald-400 font-medium mb-3">Infoziant &nbsp;·&nbsp; India / USA</p>
+                        <p class="text-slate-300 text-sm leading-relaxed mb-4">
+                            Successfully completed a <span class="text-white font-medium">MERN Stack Internship</span> at Infoziant (ISO 27001 · SOC 2 certified).
+                            Worked on the capstone project <span class="text-emerald-400 font-medium">"ThreadTrend — Tailoring Management &amp; Scheduling System"</span>,
+                            demonstrating strong technical skills and commitment to building real-world full-stack applications.
+                        </p>
+                        <div class="flex flex-wrap gap-2 mb-5">
+                            <span class="proj-tag">MongoDB</span>
+                            <span class="proj-tag">Express.js</span>
+                            <span class="proj-tag">React.js</span>
+                            <span class="proj-tag">Node.js</span>
+                            <span class="proj-tag">Full Stack</span>
+                        </div>
+                        <a href="https://drive.google.com/file/d/1chAfk5uNlZS8Nclvg27_Ij5liyOfaEro/view?usp=drive_link" target="_blank"
+                           class="inline-flex items-center gap-2 px-5 py-2.5 bg-emerald-500/10 border border-emerald-500/40 rounded-2xl text-emerald-400 text-sm font-medium hover:bg-emerald-500/20 transition">
+                            <i class="fas fa-certificate text-xs"></i> View Certificate
+                        </a>
+                    </div>
+                </div>
+                <!-- Right: duration badge -->
+                <div class="flex flex-col items-start md:items-end gap-2 flex-shrink-0">
+                    <span class="proj-tag text-sm px-3 py-1">Dec 1 – Dec 19, 2025</span>
+                    <span class="text-slate-500 text-xs">16 Days</span>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</section>
+
+<!-- ════════════════════ PROJECTS ════════════════════ -->
+<section id="projects" class="py-28 section-dark">
+    <div class="max-w-6xl mx-auto px-6">
+        <h2 class="section-header text-center mb-4" data-aos="fade-up">Featured Projects</h2>
+        <p class="text-center text-slate-400 mb-16 max-w-md mx-auto" data-aos="fade-up" data-aos-delay="80">
+            Real-world full-stack applications built end-to-end
+        </p>
+
+        <div class="grid md:grid-cols-2 gap-8">
+
+            <!-- Project 1 -->
+            <div class="bg-slate-900/80 border border-slate-700/60 rounded-3xl p-8 card-hover card-shimmer flex flex-col" data-aos="fade-up">
+                <div class="flex items-start justify-between mb-4">
+                    <div class="w-12 h-12 bg-gradient-to-br from-red-500/20 to-orange-500/20 border border-red-500/30 rounded-2xl flex items-center justify-center text-2xl">🚨</div>
+                    <a href="https://github.com/Swetha-JP/Emergency-response-system-" target="_blank"
+                       class="text-slate-500 hover:text-emerald-400 transition text-lg">
+                        <i class="fab fa-github"></i>
+                    </a>
+                </div>
+                <h3 class="text-xl font-semibold mb-2">Tourist Emergency Assistance &amp; Multi-Agency Coordination Platform</h3>
+                <p class="text-slate-400 text-sm leading-relaxed mb-5 flex-1">
+                    Real-time emergency response system that connects tourists in distress with Police, Ambulance, and Fire services via live GPS tracking, AI-driven incident classification, and a unified multi-agency dashboard.
+                </p>
+                <div class="flex flex-wrap gap-2 mb-5">
+                    <span class="proj-tag">React.js</span>
+                    <span class="proj-tag">Node.js</span>
+                    <span class="proj-tag">MongoDB</span>
+                    <span class="proj-tag">FastAPI</span>
+                    <span class="proj-tag">GPS Tracking</span>
+                    <span class="proj-tag">AI Classification</span>
+                </div>
+                <div class="flex gap-4 text-sm">
+                    <a href="https://github.com/Swetha-JP/Emergency-response-system-" target="_blank"
+                       class="text-emerald-400 hover:text-emerald-300 transition flex items-center gap-1">
+                        <i class="fab fa-github text-xs"></i> View on GitHub →
+                    </a>
+                </div>
+            </div>
+
+            <!-- Project 2 -->
+            <div class="bg-slate-900/80 border border-slate-700/60 rounded-3xl p-8 card-hover card-shimmer flex flex-col" data-aos="fade-up" data-aos-delay="100">
+                <div class="flex items-start justify-between mb-4">
+                    <div class="w-12 h-12 bg-gradient-to-br from-purple-500/20 to-pink-500/20 border border-purple-500/30 rounded-2xl flex items-center justify-center text-2xl">🧵</div>
+                    <a href="https://github.com/Swetha-JP/ThreadTrend.git" target="_blank"
+                       class="text-slate-500 hover:text-emerald-400 transition text-lg">
+                        <i class="fab fa-github"></i>
+                    </a>
+                </div>
+                <h3 class="text-xl font-semibold mb-2">ThreadTrend — Digital Tailoring Management System</h3>
+                <p class="text-slate-400 text-sm leading-relaxed mb-5 flex-1">
+                    End-to-end management solution for tailoring businesses — customer portal, tailor scheduling, real-time order tracking, inventory management, and separate dashboards for customers and staff.
+                </p>
+                <div class="flex flex-wrap gap-2 mb-5">
+                    <span class="proj-tag">React.js</span>
+                    <span class="proj-tag">Express.js</span>
+                    <span class="proj-tag">MongoDB</span>
+                    <span class="proj-tag">Tailwind CSS</span>
+                    <span class="proj-tag">REST API</span>
+                </div>
+                <div class="flex gap-4 text-sm">
+                    <a href="https://github.com/Swetha-JP/ThreadTrend.git" target="_blank"
+                       class="text-emerald-400 hover:text-emerald-300 transition flex items-center gap-1">
+                        <i class="fab fa-github text-xs"></i> View on GitHub →
+                    </a>
+                </div>
+            </div>
+
+            <!-- Project 3 -->
+            <div class="bg-slate-900/80 border border-slate-700/60 rounded-3xl p-8 card-hover card-shimmer flex flex-col" data-aos="fade-up" data-aos-delay="150">
+                <div class="flex items-start justify-between mb-4">
+                    <div class="w-12 h-12 bg-gradient-to-br from-blue-500/20 to-cyan-500/20 border border-blue-500/30 rounded-2xl flex items-center justify-center text-2xl">🧠</div>
+                    <a href="https://github.com/Swetha-JP/NeuralCode_Code-Practice-Website.git" target="_blank"
+                       class="text-slate-500 hover:text-emerald-400 transition text-lg">
+                        <i class="fab fa-github"></i>
+                    </a>
+                </div>
+                <h3 class="text-xl font-semibold mb-2">NeuralCode — Advanced AI Coding Platform</h3>
+                <p class="text-slate-400 text-sm leading-relaxed mb-5 flex-1">
+                    Intelligent coding practice platform with Monaco Editor integration, real-time Python execution, GPT-4 AI code assistant, smart debugging, performance analysis, and progressive challenge levels.
+                </p>
+                <div class="flex flex-wrap gap-2 mb-5">
+                    <span class="proj-tag">React.js</span>
+                    <span class="proj-tag">FastAPI</span>
+                    <span class="proj-tag">Monaco Editor</span>
+                    <span class="proj-tag">GPT-4 API</span>
+                    <span class="proj-tag">Docker</span>
+                    <span class="proj-tag">Python</span>
+                </div>
+                <div class="flex gap-4 text-sm">
+                    <a href="https://github.com/Swetha-JP/NeuralCode_Code-Practice-Website.git" target="_blank"
+                       class="text-emerald-400 hover:text-emerald-300 transition flex items-center gap-1">
+                        <i class="fab fa-github text-xs"></i> View on GitHub →
+                    </a>
+                </div>
+            </div>
+
+            <!-- Project 4 -->
+            <div class="bg-slate-900/80 border border-slate-700/60 rounded-3xl p-8 card-hover card-shimmer flex flex-col" data-aos="fade-up" data-aos-delay="200">
+                <div class="flex items-start justify-between mb-4">
+                    <div class="w-12 h-12 bg-gradient-to-br from-emerald-500/20 to-teal-500/20 border border-emerald-500/30 rounded-2xl flex items-center justify-center text-2xl">🎓</div>
+                    <a href="https://github.com/Swetha-JP/RootsReconnect---Intelligent-Alumni-Management-System.git" target="_blank"
+                       class="text-slate-500 hover:text-emerald-400 transition text-lg">
+                        <i class="fab fa-github"></i>
+                    </a>
+                </div>
+                <h3 class="text-xl font-semibold mb-2">RootsReconnect — Intelligent Alumni Management System</h3>
+                <p class="text-slate-400 text-sm leading-relaxed mb-5 flex-1">
+                    Smart alumni networking platform with an AI-powered chat assistant, event &amp; reunion management, job board, mentorship pairing, and a rich analytics dashboard for institutional insights.
+                </p>
+                <div class="flex flex-wrap gap-2 mb-5">
+                    <span class="proj-tag">React.js</span>
+                    <span class="proj-tag">Node.js</span>
+                    <span class="proj-tag">MongoDB</span>
+                    <span class="proj-tag">AI Chatbot</span>
+                    <span class="proj-tag">Analytics</span>
+                </div>
+                <div class="flex gap-4 text-sm">
+                    <a href="https://github.com/Swetha-JP/RootsReconnect---Intelligent-Alumni-Management-System.git" target="_blank"
+                       class="text-emerald-400 hover:text-emerald-300 transition flex items-center gap-1">
+                        <i class="fab fa-github text-xs"></i> View on GitHub →
+                    </a>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</section>
+
+<!-- ════════════════════ CODING PROFILES ════════════════════ -->
+<section id="coding" class="py-28 section-deeper">
+    <div class="max-w-6xl mx-auto px-6">
+        <h2 class="section-header text-center mb-4" data-aos="fade-up">Coding Profiles</h2>
+        <p class="text-center text-slate-400 mb-16" data-aos="fade-up" data-aos-delay="80">
+            Consistent problem solver · Strong DSA foundation
+        </p>
+        <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+
+            <a href="https://github.com/Swetha-JP" target="_blank"
+               class="bg-slate-900 border border-slate-700 rounded-3xl p-8 text-center card-hover flex flex-col items-center" data-aos="fade-up">
+                <i class="fab fa-github platform-icon text-5xl mb-5 text-gray-300"></i>
+                <h3 class="font-semibold text-xl mb-1">GitHub</h3>
+                <p class="text-slate-400 text-sm">4+ Active Repositories</p>
+                <p class="text-emerald-400 text-xs mt-2">Open Source Projects</p>
+            </a>
+
+            <a href="https://leetcode.com/u/Swetha-JP/" target="_blank"
+               class="bg-slate-900 border border-slate-700 rounded-3xl p-8 text-center card-hover flex flex-col items-center" data-aos="fade-up" data-aos-delay="80">
+                <i class="fas fa-code platform-icon text-5xl mb-5 text-orange-400"></i>
+                <h3 class="font-semibold text-xl mb-1">LeetCode</h3>
+                <p class="text-slate-400 text-sm">700+ Problems Solved</p>
+                <p class="text-emerald-400 text-xs mt-2">DSA · Algorithms</p>
+            </a>
+
+            <a href="https://www.hackerrank.com/profile/Swetha_JP" target="_blank"
+               class="bg-slate-900 border border-slate-700 rounded-3xl p-8 text-center card-hover flex flex-col items-center" data-aos="fade-up" data-aos-delay="160">
+                <i class="fas fa-trophy platform-icon text-5xl mb-5 text-yellow-400"></i>
+                <h3 class="font-semibold text-xl mb-1">HackerRank</h3>
+                <p class="text-slate-400 text-sm">DSA &amp; SQL Practice</p>
+                <p class="text-emerald-400 text-xs mt-2">Star Rated</p>
+            </a>
+
+            <a href="https://www.skillrack.com/faces/resume.xhtml?id=514574&key=8b1e3debdfb1b03e2588e42dc3d790edc5a6803f" target="_blank"
+               class="bg-slate-900 border border-slate-700 rounded-3xl p-8 text-center card-hover flex flex-col items-center" data-aos="fade-up" data-aos-delay="240">
+                <i class="fas fa-laptop-code platform-icon text-5xl mb-5 text-blue-400"></i>
+                <h3 class="font-semibold text-xl mb-1">SkillRack</h3>
+                <p class="text-slate-400 text-sm">700+ Problems Solved</p>
+                <p class="text-emerald-400 text-xs mt-2">Badges &amp; Certificates</p>
+            </a>
+
+        </div>
+    </div>
+</section>
+
+<!-- ════════════════════ SKILLS ════════════════════ -->
+<section id="skills" class="py-28 section-dark">
+    <div class="max-w-6xl mx-auto px-6">
+        <h2 class="section-header text-center mb-16" data-aos="fade-up">Technical Skills</h2>
+
+        <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+
+            <!-- Programming & DSA -->
+            <div class="bg-slate-900 border border-slate-700 rounded-3xl p-7" data-aos="fade-up">
+                <div class="flex items-center gap-3 mb-5">
+                    <div class="w-9 h-9 bg-emerald-500/20 rounded-xl flex items-center justify-center text-emerald-400"><i class="fas fa-code text-sm"></i></div>
+                    <h3 class="font-semibold text-emerald-400">Programming &amp; DSA</h3>
+                </div>
+                <p class="text-xs text-slate-500 uppercase tracking-widest mb-3">Languages</p>
+                <div class="flex flex-wrap gap-2 mb-4">
+                    <span class="tech-badge">Java</span>
+                    <span class="tech-badge">Python</span>
+                    <span class="tech-badge">JavaScript</span>
+                    <span class="tech-badge">TypeScript</span>
+                    <span class="tech-badge">C</span>
+                </div>
+                <p class="text-xs text-slate-500 uppercase tracking-widest mb-3">Problem Solving</p>
+                <p class="text-sm text-slate-400">700+ problems across LeetCode, HackerRank &amp; SkillRack</p>
+            </div>
+
+            <!-- Full-Stack Development -->
+            <div class="bg-slate-900 border border-slate-700 rounded-3xl p-7" data-aos="fade-up" data-aos-delay="80">
+                <div class="flex items-center gap-3 mb-5">
+                    <div class="w-9 h-9 bg-blue-500/20 rounded-xl flex items-center justify-center text-blue-400"><i class="fas fa-layer-group text-sm"></i></div>
+                    <h3 class="font-semibold text-blue-400">Full-Stack Development</h3>
+                </div>
+                <div class="flex flex-wrap gap-2">
+                    <span class="tech-badge">React.js</span>
+                    <span class="tech-badge">Node.js</span>
+                    <span class="tech-badge">Express.js</span>
+                    <span class="tech-badge">MERN Stack</span>
+                    <span class="tech-badge">FastAPI</span>
+                    <span class="tech-badge">Tailwind CSS</span>
+                    <span class="tech-badge">HTML / CSS</span>
+                    <span class="tech-badge">REST APIs</span>
+                </div>
+            </div>
+
+            <!-- AI / ML & Data -->
+            <div class="bg-slate-900 border border-slate-700 rounded-3xl p-7" data-aos="fade-up" data-aos-delay="160">
+                <div class="flex items-center gap-3 mb-5">
+                    <div class="w-9 h-9 bg-purple-500/20 rounded-xl flex items-center justify-center text-purple-400"><i class="fas fa-brain text-sm"></i></div>
+                    <h3 class="font-semibold text-purple-400">AI / ML &amp; Data</h3>
+                </div>
+                <div class="flex flex-wrap gap-2">
+                    <span class="tech-badge">AI Integration</span>
+                    <span class="tech-badge">GPT-4 API</span>
+                    <span class="tech-badge">Data Analysis</span>
+                    <span class="tech-badge">MongoDB</span>
+                    <span class="tech-badge">MySQL</span>
+                    <span class="tech-badge">Data Science</span>
+                </div>
+            </div>
+
+            <!-- Tools & Platforms -->
+            <div class="bg-slate-900 border border-slate-700 rounded-3xl p-7" data-aos="fade-up" data-aos-delay="240">
+                <div class="flex items-center gap-3 mb-5">
+                    <div class="w-9 h-9 bg-orange-500/20 rounded-xl flex items-center justify-center text-orange-400"><i class="fas fa-tools text-sm"></i></div>
+                    <h3 class="font-semibold text-orange-400">Tools &amp; Platforms</h3>
+                </div>
+                <div class="flex flex-wrap gap-2">
+                    <span class="tech-badge">Git &amp; GitHub</span>
+                    <span class="tech-badge">Docker</span>
+                    <span class="tech-badge">Postman</span>
+                    <span class="tech-badge">VS Code</span>
+                    <span class="tech-badge">Monaco Editor</span>
+                    <span class="tech-badge">Linux</span>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</section>
+
+<!-- ════════════════════ CERTIFICATES ════════════════════ -->
+<section id="certificates" class="py-28 section-deeper">
+    <div class="max-w-6xl mx-auto px-6">
+        <h2 class="section-header text-center mb-4" data-aos="fade-up">Certificates</h2>
+        <p class="text-center text-slate-400 mb-16 max-w-sm mx-auto" data-aos="fade-up" data-aos-delay="80">
+            Continuous learner · 11+ verified certifications
+        </p>
+
+        <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-5">
+
+            <!-- Introduction to C → 1Ha-e_paJbXB90u2EP-lxCtkEHqSk7dDZ (confirmed from filename) -->
+            <a href="https://drive.google.com/file/d/1Ha-e_paJbXB90u2EP-lxCtkEHqSk7dDZ/view?usp=drive_link" target="_blank"
+               class="bg-slate-900 border border-slate-700 rounded-3xl p-6 hover:border-emerald-400 card-hover flex items-start gap-4" data-aos="fade-up">
+                <div class="cert-icon"><i class="fas fa-terminal text-green-400"></i></div>
+                <div><h3 class="font-semibold mb-1">Introduction to C</h3><p class="text-xs text-slate-400">Certificate</p></div>
+            </a>
+
+            <!-- Introduction to HTML → 1Z_xyUWqgPEgEs4YOcKUxGR4YZKb7H8vZ (confirmed from filename) -->
+            <a href="https://drive.google.com/file/d/1Z_xyUWqgPEgEs4YOcKUxGR4YZKb7H8vZ/view?usp=drive_link" target="_blank"
+               class="bg-slate-900 border border-slate-700 rounded-3xl p-6 hover:border-emerald-400 card-hover flex items-start gap-4" data-aos="fade-up" data-aos-delay="60">
+                <div class="cert-icon"><i class="fab fa-html5 text-orange-500"></i></div>
+                <div><h3 class="font-semibold mb-1">Introduction to HTML</h3><p class="text-xs text-slate-400">Certificate</p></div>
+            </a>
+
+            <!-- MySQL → 1r5i8br5T7ahK8hPzpgFZxKHfNP4R32rr (confirmed: MY SQL.jpg) -->
+            <a href="https://drive.google.com/file/d/1r5i8br5T7ahK8hPzpgFZxKHfNP4R32rr/view?usp=drive_link" target="_blank"
+               class="bg-slate-900 border border-slate-700 rounded-3xl p-6 hover:border-emerald-400 card-hover flex items-start gap-4" data-aos="fade-up" data-aos-delay="120">
+                <div class="cert-icon"><i class="fas fa-database text-sky-400"></i></div>
+                <div><h3 class="font-semibold mb-1">MySQL</h3><p class="text-xs text-slate-400">Certificate</p></div>
+            </a>
+
+            <!-- Data Structures & Algorithms → 1HmMkpqlf38dEWfpYSoEw1JqpJI7fRaSQ (confirmed: Master data structure and algorithm.jpg) -->
+            <a href="https://drive.google.com/file/d/1HmMkpqlf38dEWfpYSoEw1JqpJI7fRaSQ/view?usp=drive_link" target="_blank"
+               class="bg-slate-900 border border-slate-700 rounded-3xl p-6 hover:border-emerald-400 card-hover flex items-start gap-4" data-aos="fade-up" data-aos-delay="60">
+                <div class="cert-icon"><i class="fas fa-project-diagram text-purple-400"></i></div>
+                <div><h3 class="font-semibold mb-1">Data Structures &amp; Algorithms</h3><p class="text-xs text-slate-400">Certificate</p></div>
+            </a>
+
+            <!-- Master in Data Analysis & Analytics → 1xDkHiJrJgrnOqvqyhacil94FmA9Fipkx (confirmed: Master in Data Analysis and Analystics.jpg) -->
+            <a href="https://drive.google.com/file/d/1xDkHiJrJgrnOqvqyhacil94FmA9Fipkx/view?usp=drive_link" target="_blank"
+               class="bg-slate-900 border border-slate-700 rounded-3xl p-6 hover:border-emerald-400 card-hover flex items-start gap-4" data-aos="fade-up" data-aos-delay="120">
+                <div class="cert-icon"><i class="fas fa-chart-bar text-cyan-400"></i></div>
+                <div><h3 class="font-semibold mb-1">Master in Data Analysis &amp; Analytics</h3><p class="text-xs text-slate-400">Certificate</p></div>
+            </a>
+
+            <!-- Remaining 6 links to be confirmed by user -->
+            <a href="https://drive.google.com/file/d/1u06D_1w5VGTjFHuVbLu8kgeVDMk3zmVR/view?usp=drive_link" target="_blank"
+               class="bg-slate-900 border border-slate-700 rounded-3xl p-6 hover:border-emerald-400 card-hover flex items-start gap-4" data-aos="fade-up" data-aos-delay="180">
+                <div class="cert-icon"><i class="fab fa-java text-orange-400"></i></div>
+                <div><h3 class="font-semibold mb-1">Java Complete Course</h3><p class="text-xs text-slate-400">Certificate</p></div>
+            </a>
+
+            <a href="https://drive.google.com/file/d/14TfWb-OpqpkVBWo7Ua0s9SLo39ZY34Ft/view?usp=drive_link" target="_blank"
+               class="bg-slate-900 border border-slate-700 rounded-3xl p-6 hover:border-emerald-400 card-hover flex items-start gap-4" data-aos="fade-up" data-aos-delay="60">
+                <div class="cert-icon"><i class="fab fa-java text-orange-400"></i></div>
+                <div><h3 class="font-semibold mb-1">Java Basic Certificate</h3><p class="text-xs text-slate-400">Certificate</p></div>
+            </a>
+
+            <a href="https://drive.google.com/file/d/16jIJEt8b2dG0eqZJGVV3aq1HjMrnZNO8/view?usp=drive_link" target="_blank"
+               class="bg-slate-900 border border-slate-700 rounded-3xl p-6 hover:border-emerald-400 card-hover flex items-start gap-4" data-aos="fade-up" data-aos-delay="120">
+                <div class="cert-icon"><i class="fas fa-database text-blue-400"></i></div>
+                <div><h3 class="font-semibold mb-1">SQL Basic Certificate</h3><p class="text-xs text-slate-400">Certificate</p></div>
+            </a>
+
+            <a href="https://drive.google.com/file/d/1YoJDrn248f0Bsnm_BH3KOa2WjhH12mgZ/view?usp=drive_link" target="_blank"
+               class="bg-slate-900 border border-slate-700 rounded-3xl p-6 hover:border-emerald-400 card-hover flex items-start gap-4" data-aos="fade-up" data-aos-delay="180">
+                <div class="cert-icon"><i class="fab fa-python text-yellow-400"></i></div>
+                <div><h3 class="font-semibold mb-1">Python for Data Science</h3><p class="text-xs text-slate-400">Certificate</p></div>
+            </a>
+
+
+            <a href="https://drive.google.com/file/d/1p2nRDCtYU5eDsJe_PJ4OY_2wTB2hsTlK/view?usp=drive_link" target="_blank"
+               class="bg-slate-900 border border-slate-700 rounded-3xl p-6 hover:border-emerald-400 card-hover flex items-start gap-4" data-aos="fade-up" data-aos-delay="120">
+                <div class="cert-icon"><i class="fas fa-atom text-emerald-400"></i></div>
+                <div><h3 class="font-semibold mb-1">NPTEL Certification</h3><p class="text-xs text-slate-400">NPTEL</p></div>
+            </a>
+
+        </div>
+    </div>
+</section>
+
+<!-- ════════════════════ FOOTER ════════════════════ -->
+<footer class="section-deeper border-t border-slate-800/60 py-20 text-center">
+    <div class="max-w-6xl mx-auto px-6">
+        <p class="text-3xl font-semibold mb-3 font-display gradient-text">Let's Build Something Together</p>
+        <p class="text-slate-400 mb-10 max-w-sm mx-auto">Open to full-time roles, internships, and exciting collaborations in 2026</p>
+
+        <div class="flex justify-center gap-6 text-3xl mb-10">
+            <a href="https://github.com/Swetha-JP" target="_blank" class="w-12 h-12 bg-slate-900 border border-slate-700 rounded-2xl flex items-center justify-center hover:text-emerald-400 hover:border-emerald-400 transition card-hover">
+                <i class="fab fa-github"></i>
+            </a>
+            <a href="https://www.linkedin.com/in/swetha-jp" target="_blank" class="w-12 h-12 bg-slate-900 border border-slate-700 rounded-2xl flex items-center justify-center hover:text-emerald-400 hover:border-emerald-400 transition card-hover">
+                <i class="fab fa-linkedin text-xl"></i>
+            </a>
+            <a href="mailto:swetha.jp2024aids@sece.ac.in" class="w-12 h-12 bg-slate-900 border border-slate-700 rounded-2xl flex items-center justify-center hover:text-emerald-400 hover:border-emerald-400 transition card-hover">
+                <i class="fas fa-envelope text-xl"></i>
+            </a>
+            <a href="tel:9900290558" class="w-12 h-12 bg-slate-900 border border-slate-700 rounded-2xl flex items-center justify-center hover:text-emerald-400 hover:border-emerald-400 transition card-hover">
+                <i class="fas fa-phone text-xl"></i>
+            </a>
+        </div>
+
+        <p class="text-slate-500 text-sm">
+            Sri Eshwar College of Engineering &nbsp;·&nbsp; Pollachi, Tamil Nadu, India<br>
+            <a href="mailto:swetha.jp2024aids@sece.ac.in" class="hover:text-emerald-400 transition">swetha.jp2024aids@sece.ac.in</a>
+            &nbsp;|&nbsp;
+            <a href="tel:9900290558" class="hover:text-emerald-400 transition">99002 90558</a>
+        </p>
+        <p class="text-slate-700 text-xs mt-6">© 2026 Swetha J P · Crafted with care</p>
+    </div>
+</footer>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
+<script>
+    AOS.init({ duration: 850, once: true, offset: 80 });
+</script>
+</body>
+</html>
